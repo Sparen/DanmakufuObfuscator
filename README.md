@@ -12,7 +12,7 @@ To run:			<br>
     ./dnhobf filename.ext
 
 # Aims
----Full removal of all comments [Status: TODO]						<br>
+---Full removal of all comments [Status: ONGOING]					<br>
 ---Full removal of all instances of tabs and paragraph markers [Status: TODO]		<br>
 
 # Notes

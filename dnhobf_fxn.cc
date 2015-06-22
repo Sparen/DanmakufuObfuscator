@@ -27,11 +27,9 @@ int RemoveSingleLineComments(char* infile){
   tmp.open(infile, std::fstream::in | std::fstream::out | std::fstream::app);
 
   while(!orig.eof()){
-    //c = getc(infile);//get next char ORIGINAL CODE
     orig.get(c);
-
+    if(orig.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
     cout << c; //debug
-
     if(c=='/'){
       char tempchar;
       orig.get(tempchar);
@@ -56,6 +54,7 @@ int RemoveSingleLineComments(char* infile){
   char a;
   while (!tmp.eof()){
     tmp.get(a);
+    if(tmp.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
     cout << a; //debug
     orig.put(a);
   }
