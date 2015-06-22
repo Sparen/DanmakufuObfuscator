@@ -13,9 +13,9 @@ CCFLAGS = -std=c++11 -Wall -Wextra -pedantic -O
 bin: dnhobf
 
 dnhobf_fxn.o: dnhobf_fxn.cc dnhobf_fxn.h
-	$(CC) $(CCFLAGS) -c dhnobf_fxn.cc
+	$(CC) $(CCFLAGS) -c dnhobf_fxn.cc
 
-dnhobf.o: generator.cc dnhobf_fxn.h
+dnhobf.o: dnhobf.cc dnhobf_fxn.h
 	$(CC) $(CCFLAGS) -c dnhobf.cc
 
 dnhobf: dnhobf.o dnhobf_fxn.o
