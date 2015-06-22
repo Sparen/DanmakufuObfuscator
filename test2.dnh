@@ -1,0 +1,44 @@
+#TouhouDanmakufu[Single]
+#Title["This is a testing script meant to test block comment removal"]
+#Text["For use with Sparen's Danmakufu Obfuscator"]
+#ScriptVersion[3]
+
+//This file was made on June 22, 2015, and is a part of the test suite.
+//PLEASE DO NOT REMOVE THIS FILE FROM THE REPOSITORY.
+
+    let objBoss; //declare variable
+    let objScene = GetEnemyBossSceneID(); //obtain infomation on Boss Scene
+
+    @Initialize {
+        objBoss = ObjEnemy_Create(OBJ_ENEMY_BOSS); //create boss object
+        ObjEnemy_Regist(objBoss); //register boss object
+        ObjMove_SetDestAtFrame(objBoss, 384/2, 448/2, 60);
+    }
+
+    @Event {
+        alternative(GetEventType())
+        case(EV_REQUEST_LIFE){SetScriptResult(2500);}
+        case(EV_REQUEST_TIMER){SetScriptResult(60);}
+    }
+
+    @MainLoop {
+        /* THIS IS A BLOCK COMMENT */
+        Test; /*Test*/
+/*test*/  Test;
+        yield;
+    }
+
+    /*
+
+    /******** Meow - A specialized function for announcing the presence of a cat ******** /
+    //Above line and this line should not be here, below line shoul ALSO not be here.
+    task Meow{
+        RaiseError("A cat was here"); //this is a comment
+    }
+
+    */
+
+    task Test{
+        let dir = GetCurrentScriptDirectory~"./test1.dnh"; //the filepath should not be damaged or removed by dnhobf
+        let redox = 3*5; /* asterisk should not be changed*/
+    }
