@@ -2,61 +2,68 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <unistd.h>
+#include <fstream>
 #include "dnhobf_fxn.h"
 
 using std::cout;
 using std::endl;
+using std::fstream;
 
-int Obfuscate(FILE* infile){
+int Obfuscate(char* infile){
   RemoveBlockComments(infile);
   RemoveSingleLineComments(infile);
-  fclose(infile);
   return 0;
 }
 
 //moves through the entire file, one character at a time, and copies to a temporary file. When it finds a //, it will not copy until it finds a \n. After that, it will begin copying again. At the end, it will copy the temporary file back over to the original file.
-int RemoveSingleLineComments(FILE* infile){
+int RemoveSingleLineComments(char* infile){
   cout << "~~~Now Removing Single Line Comments~~~" << endl;
-  rewind(infile);
   char c;
 
-  FILE *tmp;
-  tmp = tmpfile();
+  fstream orig;
+  orig.open(infile, std::fstream::in | std::fstream::out);
 
-  do{
-    c = getc(infile);//get next char
+  fstream tmp;
+  tmp.open(infile, std::fstream::in | std::fstream::out | std::fstream::app);
 
-    //cout << c; //debug
+  while(!orig.eof()){
+    //c = getc(infile);//get next char ORIGINAL CODE
+    orig.get(c);
+
+    cout << c; //debug
 
     if(c=='/'){
-      char tempchar = getc(infile);
+      char tempchar;
+      orig.get(tempchar);
       if(tempchar!='/'){//if it is not a comment
-	fputc(c, tmp); //Not a comment, put both chars down
-	fputc(tempchar, tmp);
+	tmp.put(c); //Not a comment, put both chars down
+	tmp.put(tempchar);
       }else{//it's a comment
-	while(getc(infile)!='\n'){}//move to new line marker
-	fseek(infile, -1, SEEK_CUR);//move back one
+	while(orig.get()!='\n'){}//move to new line marker
+	orig.seekg(-1, std::ios_base::cur);//may need to be seekp. Move back one char
       }
     }else{
-      fputc(c, tmp);
+      tmp.put(c);
     }
-  }while(c != EOF);
+  }
+ 
+  orig.close();
+  orig.open(infile, std::ofstream::out | std::fstream::trunc);//wipe contents of original
 
   //overwrite original file with new
-  rewind(tmp);
-  rewind(infile);
+  tmp.seekg(std::ios_base::beg);//read, move to front
+  orig.seekp(std::ios_base::beg);//write, move to front;
   char a;
-  do{
-    a = getc(tmp);
-    fputc(a, infile);
-  }while (a != EOF);
+  while (!tmp.eof()){
+    tmp.get(a);
+    cout << a; //debug
+    orig.put(a);
+  }
 
-  fclose(tmp);//close temporary file
+  tmp.close();//close temporary file
   return 0;
 }
 
-int RemoveBlockComments(FILE* infile){
-  rewind(infile);
+int RemoveBlockComments(char* infile){
   return 0;
 }
