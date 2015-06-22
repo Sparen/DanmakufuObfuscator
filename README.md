@@ -11,6 +11,9 @@ To compile:		<br>
 To run:			<br>
     ./dnhobf filename.ext
 
-Aims:			<br>
+# Aims
 ---Full removal of all comments [Status: TODO]						<br>
 ---Full removal of all instances of tabs and paragraph markers [Status: TODO]		<br>
+
+# Notes
+TESTERS: Please do all testing in the tmp folder. I don't want the test files (the originals) to magically disappear.

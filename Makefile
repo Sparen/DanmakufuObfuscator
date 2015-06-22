@@ -22,4 +22,4 @@ dnhobf: dnhobf.o dnhobf_fxn.o
 	$(CC) $(CCFLAGS) -o dnhobf dnhobf.o dnhobf_fxn.o
 
 clean: 
-	rm -f *.o dnhobf *# *~ *.exe *.gcov *.gcda *.gcno
+	rm -f *.o dnhobf *# *~ *.exe *.gcov *.gcda *.gcno tmp/*

@@ -20,10 +20,12 @@ int main(int argc, char** argv){
     if(infile){//exists
       freopen(argv[i], "a+", infile);
       files.push_back(infile);//add to vector.
+    }else{
+      cout << "Error: " << argv[i] << " does not exist." << endl;
     }
   }
   for(unsigned int i = 0; i < files.size(); i++){
-    //run obfuscator on files here
+    Obfuscate(files.at(i));
   }
   return 0;
 }
