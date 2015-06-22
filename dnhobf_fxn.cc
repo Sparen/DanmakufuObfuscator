@@ -25,6 +25,9 @@ int RemoveSingleLineComments(FILE* infile){
 
   do{
     c = getc(infile);//get next char
+
+    cout << c; //debug
+
     if(c=='/'){
       char tempchar = getc(infile);
       if(tempchar!='/'){//if it is not a comment
