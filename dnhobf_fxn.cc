@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unistd.h>
 #include "dnhobf_fxn.h"
 
 using std::cout;
@@ -26,12 +27,13 @@ int RemoveSingleLineComments(FILE* infile){
   do{
     c = getc(infile);//get next char
 
-    cout << c; //debug
+    //cout << c; //debug
 
     if(c=='/'){
       char tempchar = getc(infile);
       if(tempchar!='/'){//if it is not a comment
-	fputc(c, tmp);//Not a comment, put it down
+	fputc(c, tmp); //Not a comment, put both chars down
+	fputc(tempchar, tmp);
       }else{//it's a comment
 	while(getc(infile)!='\n'){}//move to new line marker
 	fseek(infile, -1, SEEK_CUR);//move back one
