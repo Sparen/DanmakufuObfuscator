@@ -1,0 +1,39 @@
+#TouhouDanmakufu[Single]
+#Title["This is a testing script meant to test single line comment removal"]
+#Text["For use with Sparen's Danmakufu Obfuscator"]
+#ScriptVersion[3]
+
+//This file was made on June 22, 2015, and is a part of the test suite.
+//PLEASE DO NOT REMOVE THIS FILE FROM THE REPOSITORY.
+
+    let objBoss; //declare variable
+    let objScene = GetEnemyBossSceneID(); //obtain infomation on Boss Scene
+
+    @Initialize {
+        objBoss = ObjEnemy_Create(OBJ_ENEMY_BOSS); //create boss object
+        ObjEnemy_Regist(objBoss); //register boss object
+        ObjMove_SetDestAtFrame(objBoss, 384/2, 448/2, 60);
+    }
+
+    @Event {
+        alternative(GetEventType())
+        case(EV_REQUEST_LIFE){SetScriptResult(2500);}
+        case(EV_REQUEST_TIMER){SetScriptResult(60);}
+    }
+
+    @MainLoop {
+        //ThIs Is a Comment
+        //  this        shouldallbedeleted
+        // this   should also // be */ deleted
+        // 7~&~&~&~&~```7~&&7dajebfieessee*&^%$#@@!
+        /// this should be deleted
+        Test;//Test
+        Test; //test
+        Test;  //test
+//test  Test;
+        yield;
+    }
+
+    task Test{
+        let dir = GetCurrentScriptDirectory~"./test1.dnh"; //the filepath should not be damaged or removed by dnhobf
+    }

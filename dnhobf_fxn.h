@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+int Obfuscate(FILE* infile);
 int RemoveSingleLineComments(FILE* infile);
 int RemoveBlockComments(FILE* infile);
 
