@@ -16,6 +16,7 @@ int Obfuscate(FILE* infile){
 
 //moves through the entire file, one character at a time, and copies to a temporary file. When it finds a //, it will not copy until it finds a \n. After that, it will begin copying again. At the end, it will copy the temporary file back over to the original file.
 int RemoveSingleLineComments(FILE* infile){
+  cout << "~~~Now Removing Single Line Comments~~~" << endl;
   rewind(infile);
   char c;
 
@@ -37,21 +38,14 @@ int RemoveSingleLineComments(FILE* infile){
     }
   }while(c != EOF);
 
-  //DEBUG: Post temporary file to actual file
-  /*cout << endl;
+  //overwrite original file with new
   rewind(tmp);
-  char d;
+  rewind(infile);
+  char a;
   do{
-    d = getc(tmp);
-    if(d != EOF){
-      cout << d;
-    }
-  }while(d != EOF);
-  cout << endl;
-  rewind(tmp);*/
-
-  //copy temporary file to original
-  //TODO
+    a = getc(tmp);
+    fputc(a, infile);
+  }while (a != EOF);
 
   fclose(tmp);//close temporary file
   return 0;
