@@ -9,6 +9,8 @@ using std::cout;
 using std::endl;
 using std::fstream;
 
+//Removal of Block Comments MUST come before Removal of Single Line Comments
+
 //Only removes comments
 int ObfuscateA1(char* infile){
   RemoveBlockComments(infile);
@@ -29,10 +31,10 @@ int RemoveSingleLineComments(char* infile){
   char c;
 
   fstream orig;
-  orig.open(infile, std::fstream::in | std::fstream::out);
+  orig.open(infile, std::fstream::in);
 
   fstream tmp;
-  tmp.open(infile, std::fstream::in | std::fstream::out | std::fstream::app);
+  tmp.open(infile, std::fstream::in | std::fstream::out);
 
   while(!orig.eof()){
     orig.get(c);
@@ -45,7 +47,14 @@ int RemoveSingleLineComments(char* infile){
 	tmp.put(c); //Not a comment, put both chars down
 	tmp.put(tempchar);
       }else{//it's a comment
-	while(orig.get()!='\n'){}//move to new line marker
+	bool satisfied = false;
+	char temp2;
+	while(!satisfied){
+	  orig.get(temp2);
+	  if(temp2 == '\n' || temp2 == '\r'){//move to new line marker
+	    satisfied = true;
+	  }
+	}
 	orig.seekg(-1, std::ios_base::cur);//Move back one char
       }
     }else{
@@ -78,7 +87,7 @@ int RemoveBlockComments(char* infile){
   char c;
 
   fstream orig;
-  orig.open(infile, std::fstream::in | std::fstream::out);
+  orig.open(infile, std::fstream::in);
 
   fstream tmp;
   tmp.open(infile, std::fstream::in | std::fstream::out | std::fstream::app);
@@ -86,7 +95,7 @@ int RemoveBlockComments(char* infile){
   while(!orig.eof()){
     orig.get(c);
     if(orig.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    //cout << c; //debug
+    cout << c; //debug
     if(c=='/'){
       char tempchar;
       orig.get(tempchar);
@@ -120,7 +129,7 @@ int RemoveBlockComments(char* infile){
   while (!tmp.eof()){
     tmp.get(a);
     if(tmp.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    //cout << a; //debug
+    cout << a; //debug
     orig.put(a);
   }
 
