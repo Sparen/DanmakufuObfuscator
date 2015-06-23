@@ -10,6 +10,7 @@ using std::endl;
 using std::vector;
 
 int main(int argc, char** argv){
+  cout << endl << "DANMAKUFU OBFUSCATOR BY SPAREN" << endl;
   if(argc<2){
     cout << "Error: No File Specified." << endl;
   }

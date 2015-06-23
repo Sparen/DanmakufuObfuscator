@@ -39,6 +39,6 @@
     */
 
     task Test{
-        let dir = GetCurrentScriptDirectory~"./test1.dnh"; //the filepath should not be damaged or removed by dnhobf
+        let dir = GetCurrentScriptDirectory~"./test2.dnh"; //the filepath should not be damaged or removed by dnhobf
         let redox = 3*5; /* asterisk should not be changed*/
     }
