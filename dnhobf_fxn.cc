@@ -9,7 +9,15 @@ using std::cout;
 using std::endl;
 using std::fstream;
 
-int Obfuscate(char* infile){
+//Only removes comments
+int ObfuscateA1(char* infile){
+  RemoveBlockComments(infile);
+  RemoveSingleLineComments(infile);
+  return 0;
+}
+
+//Removes comments, etc.
+int ObfuscateA2(char* infile){
   RemoveBlockComments(infile);
   RemoveSingleLineComments(infile);
   return 0;

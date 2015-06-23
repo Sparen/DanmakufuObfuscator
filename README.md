@@ -12,8 +12,11 @@ To run:			<br>
     ./dnhobf filename.ext
 
 # Aims
----Full removal of all comments [Status: ONGOING]					<br>
----Full removal of all instances of tabs and paragraph markers [Status: TODO]		<br>
+---Full removal of all comments [Status: DONE]						<br>
+---Full removal of all instances of tabs and extra whitespace [Status: TODO]		<br>
+---Replacement of all instances of new lines with single spaces  [Status: TODO]		<br>
+---Replacement of all local variables with hexadecimal [Status: TODO]			<br>
 
 # Notes
-TESTERS: Please do all testing in the tmp folder. I don't want the test files (the originals) to magically disappear.
+As of now, only supports OSX style new lines (\n). <br>
+TESTERS: Please do all testing in the tmp folder. I don't want the test files (the originals) to magically disappear.<br>

@@ -20,8 +20,9 @@ int main(int argc, char** argv){
     if(infile){//exists
       freopen(argv[i], "r+", infile);
       cout << "Preparing " << argv[i] << " for obfuscation." << endl;
-      fclose(infile);//will be handled in Obfuscate
-      Obfuscate(argv[i]);
+      fclose(infile);
+      //prompt user for obfuscation level here in the future
+      ObfuscateA2(argv[i]);
     }else{
       cout << "Error: " << argv[i] << " does not exist." << endl;
       fclose(infile);
