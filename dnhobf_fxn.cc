@@ -37,7 +37,7 @@ int RemoveSingleLineComments(char* infile){
   while(!orig.eof()){
     orig.get(c);
     if(orig.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    //cout << c; //debug
+    cout << c; //debug
     if(c=='/'){
       char tempchar;
       orig.get(tempchar);
@@ -63,11 +63,12 @@ int RemoveSingleLineComments(char* infile){
   while (!tmp.eof()){
     tmp.get(a);
     if(tmp.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    //cout << a; //debug
+    cout << a; //debug
     orig.put(a);
   }
 
   tmp.close();//close temporary file
+  orig.close();
   return 0;
 }
 
@@ -124,6 +125,7 @@ int RemoveBlockComments(char* infile){
   }
 
   tmp.close();//close temporary file
+  orig.close();
 
   return 0;
 }
