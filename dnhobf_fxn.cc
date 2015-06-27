@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "dnhobf_fxn.h"
 
+using std::string;
 using std::cout;
 using std::endl;
 using std::fstream;
@@ -13,31 +14,31 @@ using std::fstream;
 //Removal of Block Comments MUST come before Removal of Single Line Comments
 
 //Only removes comments
-int ObfuscateA1(char* infile){
+int ObfuscateA1(std::string infile){
   RemoveBlockComments(infile);
   RemoveSingleLineComments(infile);
   return 0;
 }
 
 //Removes comments, etc.
-int ObfuscateA2(char* infile){
+int ObfuscateA2(std::string infile){
   RemoveBlockComments(infile);
   //RemoveSingleLineComments(infile);
   return 0;
 }
 
 //moves through the entire file, one character at a time, and copies to a temporary file. When it finds a //, it will not copy until it finds a \n. After that, it will begin copying again. At the end, it will copy the temporary file back over to the original file.
-int RemoveSingleLineComments(char* infile){
+int RemoveSingleLineComments(std::string infile){
   cout << "~~~Now Removing Single Line Comments~~~" << endl;
   char c;
-  char* tempext = (char*)".temp";
+  string newfile = infile + ".temp";
 
   fstream orig;
-  orig.open(infile, std::fstream::in);
+  orig.open(infile.c_str(), std::fstream::in);
 
   fstream tmp;
-  cout << "Creating Temporary File with name " << strcat(infile, tempext) << endl;//debug
-  tmp.open(strcat(infile, tempext), std::fstream::in | std::fstream::out);
+  cout << "Creating Temporary File with name " << newfile << endl;//debug
+  tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out);
   if(tmp.fail()){
     cout << "Error: Failed to open Temporary File" << endl;
     exit(EXIT_FAILURE);
@@ -77,24 +78,24 @@ int RemoveSingleLineComments(char* infile){
   orig.close();
   tmp.close();
 
-  remove(infile);//remove original
-  rename(strcat(infile, tempext), infile);//replace original with temp
+  remove(infile.c_str());//remove original
+  rename(newfile.c_str(), infile.c_str());//replace original with temp
 
   return 0;
 }
 
 //moves through the file, one character at a time, and purges block comments. When it finds a /*, it will ignore everything until a */
-int RemoveBlockComments(char* infile){
+int RemoveBlockComments(std::string infile){
   cout << "~~~Now Removing Block Comments~~~" << endl;
   char c;
-  char* tempext = (char*)".temp";
+  string newfile = infile + ".temp";
 
   fstream orig;
-  orig.open(infile, std::fstream::in);
+  orig.open(infile.c_str(), std::fstream::in);
 
   fstream tmp;
-  cout << "Creating Temporary File with name " << strcat(infile, tempext) << endl;//debug
-  tmp.open(strcat(infile, tempext), std::fstream::in | std::fstream::out);
+  cout << "Creating Temporary File with name " << newfile << endl;//debug
+  tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out);
   if(tmp.fail()){
     cout << "Error: Failed to open Temporary File" << endl;
     exit(EXIT_FAILURE);
@@ -135,8 +136,8 @@ int RemoveBlockComments(char* infile){
   orig.close();
   tmp.close();
 
-  remove(infile);//remove original
-  rename(strcat(infile, tempext), infile);//replace original with temp
+  remove(infile.c_str());//remove original
+  rename(newfile.c_str(), infile.c_str());//replace original with temp
 
   return 0;
 }

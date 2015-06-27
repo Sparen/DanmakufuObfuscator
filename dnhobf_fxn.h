@@ -6,9 +6,9 @@
 #include <vector>
 #include <fstream>
 
-int ObfuscateA1(char* infile);
-int ObfuscateA2(char* infile);
-int RemoveSingleLineComments(char* infile);
-int RemoveBlockComments(char* infile);
+int ObfuscateA1(std::string infile);
+int ObfuscateA2(std::string infile);
+int RemoveSingleLineComments(std::string infile);
+int RemoveBlockComments(std::string infile);
 
 #endif
