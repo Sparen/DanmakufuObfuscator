@@ -156,6 +156,7 @@ int RemoveNewLinesAndTabs(std::string infile){
   cout << "~~~Now Removing New Lines and Tabs~~~" << endl;
   char c;
   string newfile = infile + ".temp";
+  bool removingtoggle = true;//whether removing new lines or not - used with # lines
 
   fstream orig;
   orig.open(infile.c_str(), std::fstream::in);
@@ -176,8 +177,21 @@ int RemoveNewLinesAndTabs(std::string infile){
     orig.get(c);
     if(orig.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
     //cout << c; //debug
-    if(c=='\n' || c=='\r' || c=='\t'){
-      tmp.put(' '); //replace with white space
+    if(c=='#'){//do not delete new line at end of line
+      removingtoggle = false;
+      tmp.put(c);
+    }else if(c=='\n' || c=='\r' || c=='\t'){
+      if(removingtoggle){
+	tmp.put(' '); //replace with white space
+      }else{//on a # line. Beware of \r\n things.
+	tmp.put(c);
+	char temp2;//check next char for \r\n
+	orig.get(temp2);
+	if(temp2!='\n' && temp2!='\r'){//not a double new line
+	  orig.seekg(-1, std::ios_base::cur);//Move back one char
+	}
+	removingtoggle = true;//no longer on a # line, proceed.
+      }
       if(orig.fail() || tmp.fail()){
 	cerr << "Error: Internal Logic Failure or File Stream Corruption" << endl;
 	exit(EXIT_FAILURE);
