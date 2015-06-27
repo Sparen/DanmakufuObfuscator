@@ -35,6 +35,10 @@ int RemoveSingleLineComments(std::string infile){
 
   fstream orig;
   orig.open(infile.c_str(), std::fstream::in);
+  if(orig.fail()){
+    cout << "Error: Failed to open Data File" << endl;
+    exit(EXIT_FAILURE);
+  }
 
   fstream tmp;
   cout << "Creating Temporary File with name " << newfile << endl;//debug
@@ -92,6 +96,10 @@ int RemoveBlockComments(std::string infile){
 
   fstream orig;
   orig.open(infile.c_str(), std::fstream::in);
+  if(orig.fail()){
+    cout << "Error: Failed to open Data File" << endl;
+    exit(EXIT_FAILURE);
+  }
 
   fstream tmp;
   cout << "Creating Temporary File with name " << newfile << endl;//debug
