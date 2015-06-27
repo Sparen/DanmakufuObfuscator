@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <stdio.h>
+#include <stdlib.h>
 #include "dnhobf_fxn.h"
 
 using std::string;
@@ -28,17 +29,26 @@ int main(int argc, char** argv){
       string input;
       bool satisfied = false;
       while(!satisfied){
-	cout << "1: Only remove comments" << endl;
+	cout << "1: Only remove comments - good for shrinking filesize" << endl;
 	cout << "2: Remove comments and whitespace" << endl;
+	cout << "q: quit" << endl;
 	cin >> input;
-	if(input == "1"){ObfuscateA1(filename); satisfied = true;}
-	else if(input == "2"){ObfuscateA2(filename); satisfied = true;}
-	else{cout << "Invalid input. Please type '1' or '2', without quotes." << endl;}
+	if(input == "1"){
+	  ObfuscateA1(filename); satisfied = true;
+	}else if(input == "2"){
+	  ObfuscateA2(filename); satisfied = true;
+	}else if(input == "q" || input == "Q"){
+	  cout << "Thank you for using Sparen's Danmakufu Obfuscator" << endl;
+	  exit(EXIT_SUCCESS);
+	}else{
+	  cout << "Invalid input. Please type '1', '2', or 'q' without quotes." << endl;
+	}
       }
     }else{
       cout << "Error: " << argv[i] << " does not exist." << endl;
       fclose(infile);
     }
   }
+  cout << "Thank you for using Sparen's Danmakufu Obfuscator" << endl;
   return 0;
 }
