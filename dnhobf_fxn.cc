@@ -75,28 +75,10 @@ int RemoveSingleLineComments(char* infile){
   }
  
   orig.close();
-  cout << "Preparing original file for overwriting" << endl;//debug
-  orig.open(infile, std::ofstream::out | std::fstream::trunc);//wipe contents of original
+  tmp.close();
 
-  //overwrite original file with new
-  tmp.seekg(std::ios_base::beg);//read, move to front
-  orig.seekp(std::ios_base::beg);//write, move to front;
-  char a;
-  while (!tmp.eof()){
-    tmp.get(a);
-    if(tmp.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    cout << a; //debug
-    orig.put(a);
-  }
-
-  tmp.close();//close temporary file
-  orig.close();
-
-  cout << "Removing Temporary File" << endl;//debug
-  if(remove(strcat(infile, tempext))!=0){//purge temporary file
-    cout << "Error Removing Temporary File with filepath " << strcat(infile, tempext) << endl;
-    exit(EXIT_FAILURE);
-  }
+  remove(infile);//remove original
+  rename(strcat(infile, tempext), infile);//replace original with temp
 
   return 0;
 }
@@ -149,30 +131,12 @@ int RemoveBlockComments(char* infile){
       tmp.put(c);
     }
   }
- 
+
   orig.close();
-  cout << "Preparing original file for overwriting" << endl;//debug
-  orig.open(infile, std::ofstream::out | std::fstream::trunc);//wipe contents of original
+  tmp.close();
 
-  //overwrite original file with new
-  tmp.seekg(std::ios_base::beg);//read, move to front
-  orig.seekp(std::ios_base::beg);//write, move to front;
-  char a;
-  while (!tmp.eof()){
-    tmp.get(a);
-    if(tmp.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    cout << a; //debug
-    orig.put(a);
-  }
-
-  tmp.close();//close temporary file
-  orig.close();
-
-  cout << "Removing Temporary File" << endl;//debug
-  if(remove(strcat(infile, tempext))!=0){//purge temporary file
-    cout << "Error Removing Temporary File with filepath " << strcat(infile, tempext) << endl;
-    exit(EXIT_FAILURE);
-  }
+  remove(infile);//remove original
+  rename(strcat(infile, tempext), infile);//replace original with temp
 
   return 0;
 }
