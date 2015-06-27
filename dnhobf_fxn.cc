@@ -23,7 +23,7 @@ int ObfuscateA1(std::string infile){
 //Removes comments, etc.
 int ObfuscateA2(std::string infile){
   RemoveBlockComments(infile);
-  //RemoveSingleLineComments(infile);
+  RemoveSingleLineComments(infile);
   return 0;
 }
 
@@ -42,7 +42,7 @@ int RemoveSingleLineComments(std::string infile){
 
   fstream tmp;
   cout << "Creating Temporary File with name " << newfile << endl;//debug
-  tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out);
+  tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
   if(tmp.fail()){
     cout << "Error: Failed to open Temporary File" << endl;
     exit(EXIT_FAILURE);
@@ -103,7 +103,7 @@ int RemoveBlockComments(std::string infile){
 
   fstream tmp;
   cout << "Creating Temporary File with name " << newfile << endl;//debug
-  tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out);
+  tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
   if(tmp.fail()){
     cout << "Error: Failed to open Temporary File" << endl;
     exit(EXIT_FAILURE);

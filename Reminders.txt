@@ -1,2 +1,3 @@
 fstreams
--read and write pointers are seperate
+-read and write pointers are separate
+-If you open a file with out mode but not append mode, oh boy will you have fun. As in, corrupted file stream. Enjoy.
