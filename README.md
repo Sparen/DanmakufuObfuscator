@@ -18,5 +18,4 @@ To run:			<br>
 ---Replacement of all local variables with hexadecimal [Status: TODO]			<br>
 
 # Notes
-As of now, only supports OSX style new lines (\n). <br>
 TESTERS: Please do all testing in the tmp folder. I don't want the test files (the originals) to magically disappear.<br>

@@ -8,6 +8,7 @@
 
 using std::string;
 using std::cout;
+using std::cerr;
 using std::endl;
 using std::fstream;
 
@@ -36,22 +37,22 @@ int RemoveSingleLineComments(std::string infile){
   fstream orig;
   orig.open(infile.c_str(), std::fstream::in);
   if(orig.fail()){
-    cout << "Error: Failed to open Data File" << endl;
+    cerr << "Error: Failed to open Data File" << endl;
     exit(EXIT_FAILURE);
   }
 
   fstream tmp;
-  cout << "Creating Temporary File with name " << newfile << endl;//debug
+  //cout << "Creating Temporary File with name " << newfile << endl;//debug
   tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
   if(tmp.fail()){
-    cout << "Error: Failed to open Temporary File" << endl;
+    cerr << "Error: Failed to open Temporary File" << endl;
     exit(EXIT_FAILURE);
   }
 
   while(!orig.eof()){
     orig.get(c);
     if(orig.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    cout << c; //debug
+    //cout << c; //debug
     if(c=='/'){
       char tempchar;
       orig.get(tempchar);
@@ -71,7 +72,7 @@ int RemoveSingleLineComments(std::string infile){
 	orig.seekg(-1, std::ios_base::cur);//Move back one char
       }
       if(orig.fail() || tmp.fail()){
-	cout << "Error: Internal Logic Failure or File Stream Corruption" << endl;
+	cerr << "Error: Internal Logic Failure or File Stream Corruption" << endl;
 	exit(EXIT_FAILURE);
       }
     }else{
@@ -97,22 +98,22 @@ int RemoveBlockComments(std::string infile){
   fstream orig;
   orig.open(infile.c_str(), std::fstream::in);
   if(orig.fail()){
-    cout << "Error: Failed to open Data File" << endl;
+    cerr << "Error: Failed to open Data File" << endl;
     exit(EXIT_FAILURE);
   }
 
   fstream tmp;
-  cout << "Creating Temporary File with name " << newfile << endl;//debug
+  //cout << "Creating Temporary File with name " << newfile << endl;//debug
   tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
   if(tmp.fail()){
-    cout << "Error: Failed to open Temporary File" << endl;
+    cerr << "Error: Failed to open Temporary File" << endl;
     exit(EXIT_FAILURE);
   }
 
   while(!orig.eof()){
     orig.get(c);
     if(orig.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
-    cout << c; //debug
+    //cout << c; //debug
     if(c=='/'){
       char tempchar;
       orig.get(tempchar);
@@ -133,7 +134,7 @@ int RemoveBlockComments(std::string infile){
 	}
       }
       if(orig.fail() || tmp.fail()){
-	cout << "Error: Internal Logic Failure or File Stream Corruption" << endl;
+	cerr << "Error: Internal Logic Failure or File Stream Corruption" << endl;
 	exit(EXIT_FAILURE);
       }
     }else{
