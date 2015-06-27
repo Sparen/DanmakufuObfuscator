@@ -11,5 +11,6 @@ int ObfuscateA2(std::string infile);
 int RemoveSingleLineComments(std::string infile);
 int RemoveBlockComments(std::string infile);
 int RemoveNewLinesAndTabs(std::string infile);
+int RemoveExtraWhitespace(std::string infile);
 
 #endif
