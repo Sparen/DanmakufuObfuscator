@@ -15,7 +15,6 @@ int main(int argc, char** argv){
     cout << "Error: No File Specified." << endl;
   }
   for(int i = 1; i < argc; i++){//for every file
-    //check filepath to see if exists. If it exists, add to files
     FILE* infile = fopen(argv[i], "r");
     if(infile){//exists
       freopen(argv[i], "r+", infile);

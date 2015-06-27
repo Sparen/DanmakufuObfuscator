@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 int ObfuscateA1(char* infile);
 int ObfuscateA2(char* infile);

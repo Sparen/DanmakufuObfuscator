@@ -1,0 +1,2 @@
+fstreams
+-read and write pointers are seperate

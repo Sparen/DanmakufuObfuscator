@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <stdlib.h>
 #include "dnhobf_fxn.h"
 
 using std::cout;
@@ -21,7 +22,7 @@ int ObfuscateA1(char* infile){
 //Removes comments, etc.
 int ObfuscateA2(char* infile){
   RemoveBlockComments(infile);
-  RemoveSingleLineComments(infile);
+  //RemoveSingleLineComments(infile);
   return 0;
 }
 
@@ -29,12 +30,18 @@ int ObfuscateA2(char* infile){
 int RemoveSingleLineComments(char* infile){
   cout << "~~~Now Removing Single Line Comments~~~" << endl;
   char c;
+  char* tempext = (char*)".temp";
 
   fstream orig;
   orig.open(infile, std::fstream::in);
 
   fstream tmp;
-  tmp.open(infile, std::fstream::in | std::fstream::out);
+  cout << "Creating Temporary File with name " << strcat(infile, tempext) << endl;//debug
+  tmp.open(strcat(infile, tempext), std::fstream::in | std::fstream::out);
+  if(tmp.fail()){
+    cout << "Error: Failed to open Temporary File" << endl;
+    exit(EXIT_FAILURE);
+  }
 
   while(!orig.eof()){
     orig.get(c);
@@ -54,8 +61,13 @@ int RemoveSingleLineComments(char* infile){
 	  if(temp2 == '\n' || temp2 == '\r'){//move to new line marker
 	    satisfied = true;
 	  }
+	  if(orig.eof()){satisfied = true;}//get will never throw an EOF
 	}
 	orig.seekg(-1, std::ios_base::cur);//Move back one char
+      }
+      if(orig.fail() || tmp.fail()){
+	cout << "Error: Internal Logic Failure or File Stream Corruption" << endl;
+	exit(EXIT_FAILURE);
       }
     }else{
       tmp.put(c);
@@ -63,6 +75,7 @@ int RemoveSingleLineComments(char* infile){
   }
  
   orig.close();
+  cout << "Preparing original file for overwriting" << endl;//debug
   orig.open(infile, std::ofstream::out | std::fstream::trunc);//wipe contents of original
 
   //overwrite original file with new
@@ -78,6 +91,13 @@ int RemoveSingleLineComments(char* infile){
 
   tmp.close();//close temporary file
   orig.close();
+
+  cout << "Removing Temporary File" << endl;//debug
+  if(remove(strcat(infile, tempext))!=0){//purge temporary file
+    cout << "Error Removing Temporary File with filepath " << strcat(infile, tempext) << endl;
+    exit(EXIT_FAILURE);
+  }
+
   return 0;
 }
 
@@ -85,12 +105,18 @@ int RemoveSingleLineComments(char* infile){
 int RemoveBlockComments(char* infile){
   cout << "~~~Now Removing Block Comments~~~" << endl;
   char c;
+  char* tempext = (char*)".temp";
 
   fstream orig;
   orig.open(infile, std::fstream::in);
 
   fstream tmp;
-  tmp.open(infile, std::fstream::in | std::fstream::out | std::fstream::app);
+  cout << "Creating Temporary File with name " << strcat(infile, tempext) << endl;//debug
+  tmp.open(strcat(infile, tempext), std::fstream::in | std::fstream::out);
+  if(tmp.fail()){
+    cout << "Error: Failed to open Temporary File" << endl;
+    exit(EXIT_FAILURE);
+  }
 
   while(!orig.eof()){
     orig.get(c);
@@ -112,7 +138,12 @@ int RemoveBlockComments(char* infile){
 	      satisfied = true;
 	    }//else no good, keep on looking
 	  }
+	  if(orig.eof()){satisfied = true;}//get will never throw an EOF
 	}
+      }
+      if(orig.fail() || tmp.fail()){
+	cout << "Error: Internal Logic Failure or File Stream Corruption" << endl;
+	exit(EXIT_FAILURE);
       }
     }else{
       tmp.put(c);
@@ -120,6 +151,7 @@ int RemoveBlockComments(char* infile){
   }
  
   orig.close();
+  cout << "Preparing original file for overwriting" << endl;//debug
   orig.open(infile, std::ofstream::out | std::fstream::trunc);//wipe contents of original
 
   //overwrite original file with new
@@ -135,6 +167,12 @@ int RemoveBlockComments(char* infile){
 
   tmp.close();//close temporary file
   orig.close();
+
+  cout << "Removing Temporary File" << endl;//debug
+  if(remove(strcat(infile, tempext))!=0){//purge temporary file
+    cout << "Error Removing Temporary File with filepath " << strcat(infile, tempext) << endl;
+    exit(EXIT_FAILURE);
+  }
 
   return 0;
 }
