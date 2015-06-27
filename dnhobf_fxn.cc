@@ -150,7 +150,8 @@ int RemoveBlockComments(std::string infile){
   return 0;
 }
 
-//Replaces all instances of new lines and tabs (\n \r \t) with single spaces
+//Replaces all instances of new lines and tabs (\n \r \t) with single spaces.
+//EXCEPTIONS: Preserves all lines prefixed with a #, as include statements require seperate lines.
 int RemoveNewLinesAndTabs(std::string infile){
   cout << "~~~Now Removing New Lines and Tabs~~~" << endl;
   char c;
@@ -234,7 +235,7 @@ int RemoveExtraWhitespace(std::string infile){
 	  }
 	  if(orig.eof()){satisfied = true;}//get will never throw an EOF
 	}
-	orig.seekg(-2, std::ios_base::cur);//Move back two chars
+	orig.seekg(-2, std::ios_base::cur);//Move back two chars, two in order to preserve a space, else everything is smushed
       }
       if(orig.fail() || tmp.fail()){
 	cerr << "Error: Internal Logic Failure or File Stream Corruption" << endl;

@@ -1,0 +1,47 @@
+#TouhouDanmakufu[Single]
+#Title["This is a testing script meant to test whitespace removal"]
+#Text["For use with Sparen's Danmakufu Obfuscator"]
+#ScriptVersion[3]
+
+//This file was made on June 27, 2015, and is a part of the test suite.
+//PLEASE DO NOT REMOVE THIS FILE FROM THE REPOSITORY.
+
+    #include"./test1.dnh" //this should have a new line afterwards
+    //#include"./test2.dnh"
+
+    let objBoss; //declare variable
+    let objScene = GetEnemyBossSceneID(); //obtain infomation on Boss Scene
+
+    @Initialize {
+        objBoss = ObjEnemy_Create(OBJ_ENEMY_BOSS); //create boss object
+        ObjEnemy_Regist(objBoss); //register boss object
+        ObjMove_SetDestAtFrame(objBoss, 384/2, 448/2, 60);
+    }
+
+    @Event {
+        alternative(GetEventType())
+        case(EV_REQUEST_LIFE){SetScriptResult(2500);}
+        case(EV_REQUEST_TIMER){SetScriptResult(60);}
+    }
+
+    @MainLoop {
+        /* THIS IS A BLOCK COMMENT */
+        Test; /*Test*/
+/*test*/  Test;
+        yield;
+    }
+
+    /*
+
+    /******** JAAAAAAOOOOO - A specialized function for announcing the presence of a Wild Meiling ******** /
+    //Above line and this line should not be here, below line shoul ALSO not be here.
+    task Jaaaaaooo{
+        RaiseError("Jaaaaaaaaaaooooo!"); //this is a comment
+    }
+
+    */
+
+    task Test{
+        let dir = GetCurrentScriptDirectory~"./test3.dnh"; //the filepath should not be damaged or removed by dnhobf
+        let redox = 3*5; /* asterisk should not be changed*/
+    }
