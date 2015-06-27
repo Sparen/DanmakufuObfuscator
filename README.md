@@ -13,8 +13,8 @@ To run:			<br>
 
 # Aims
 ---Full removal of all comments [Status: DONE]						<br>
----Full removal of all instances of tabs and extra whitespace [Status: TODO]		<br>
 ---Replacement of all instances of new lines with single spaces  [Status: TODO]		<br>
+---Full removal of all instances of tabs and extra whitespace [Status: TODO]		<br>
 ---Replacement of all local variables with hexadecimal [Status: TODO]			<br>
 
 # Notes
