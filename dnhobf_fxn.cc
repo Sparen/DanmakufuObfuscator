@@ -28,6 +28,7 @@ int ObfuscateA2(std::string infile){
   RemoveSingleLineComments(infile);
   RemoveNewLinesAndTabs(infile);
   RemoveExtraWhitespace(infile);
+  RestoreNewLinePostDirectory(infile);
   return 0;
 }
 
@@ -238,7 +239,9 @@ int RemoveExtraWhitespace(std::string infile){
       orig.get(tempchar);
       if(tempchar!=' '){//if only one space
 	tmp.put(c); //Only one space, put both chars down
-	tmp.put(tempchar);
+	if(!orig.eof()){//prevents pasting *BAD* things at end of file
+	  tmp.put(tempchar);
+	}
       }else{//multiple spaces
 	bool satisfied = false;
 	char temp2;
@@ -251,6 +254,81 @@ int RemoveExtraWhitespace(std::string infile){
 	}
 	orig.seekg(-2, std::ios_base::cur);//Move back two chars, two in order to preserve a space, else everything is smushed
       }
+      if(orig.eof()){break;} //juuuuust in case. Prevents next block from crashing program if end of file hit.
+      if(orig.fail() || tmp.fail()){
+	cerr << "Error: Internal Logic Failure or File Stream Corruption" << endl;
+	exit(EXIT_FAILURE);
+      }
+    }else{
+      tmp.put(c);
+    }
+  }
+ 
+  orig.close();
+  tmp.close();
+  remove(infile.c_str());//remove original
+  rename(newfile.c_str(), infile.c_str());//replace original with temp
+  return 0;
+}
+
+//Restores newlines after statements calling GetCurrentScriptDirectory
+int RestoreNewLinePostDirectory(std::string infile){
+  cout << "~~~Now Restoring New Lines for Certain Functions~~~" << endl;
+  char c;
+  string newfile = infile + ".temp";
+
+  fstream orig;
+  orig.open(infile.c_str(), std::fstream::in);
+  if(orig.fail()){
+    cerr << "Error: Failed to open Data File" << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  fstream tmp;
+  //cout << "Creating Temporary File with name " << newfile << endl;//debug
+  tmp.open(newfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
+  if(tmp.fail()){
+    cerr << "Error: Failed to open Temporary File" << endl;
+    exit(EXIT_FAILURE);
+  }
+
+  string target = "GetCurrentScriptDirectory";
+
+  while(!orig.eof()){
+    orig.get(c);
+    if(orig.eof()){break;}//get will never throw an EOF, and will duplicate the last character instead.
+    //cout << c; //debug
+    if(c=='G'){
+      int istarget = true;
+      tmp.put(c);
+      for(unsigned long i = 1; i < target.length(); i++){
+	char tempchar;
+	orig.get(tempchar);
+	if(!orig.eof()){//prevents pasting *BAD* things at end of file
+	  tmp.put(tempchar);
+	}
+	//cout << tempchar; //debug
+	if(tempchar!=target[i] || orig.eof()){ //add everything so far then
+	  istarget = false; //prevent next section from executing
+	  break; //kill the inner for loop
+	}
+      }
+
+      if (istarget) { //if target, insert new line!
+	while(true) {
+	  char tempchar;
+	  orig.get(tempchar);
+	  if (tempchar != ';' && tempchar != '}' && tempchar != ']') { 
+	    //brace is for blocks where ; is not necessary, bracket is for header fields such as #Title
+	    tmp.put(tempchar);
+	  }else{
+	    tmp.put(tempchar);
+	    tmp.put('\n');
+	    break;
+	  }
+	}
+      }
+
       if(orig.eof()){break;} //juuuuust in case. Prevents next block from crashing program if end of file hit.
       if(orig.fail() || tmp.fail()){
 	cerr << "Error: Internal Logic Failure or File Stream Corruption" << endl;

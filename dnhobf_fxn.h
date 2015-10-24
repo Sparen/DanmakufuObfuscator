@@ -12,5 +12,6 @@ int RemoveSingleLineComments(std::string infile);
 int RemoveBlockComments(std::string infile);
 int RemoveNewLinesAndTabs(std::string infile);
 int RemoveExtraWhitespace(std::string infile);
+int RestoreNewLinePostDirectory(std::string infile);
 
 #endif
