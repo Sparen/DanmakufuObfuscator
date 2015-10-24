@@ -251,6 +251,7 @@ int RemoveExtraWhitespace(std::string infile){
 	}
 	orig.seekg(-2, std::ios_base::cur);//Move back two chars, two in order to preserve a space, else everything is smushed
       }
+      if(orig.eof()){break;} //juuuuust in case. Prevents next block from crashing program if end of file hit.
       if(orig.fail() || tmp.fail()){
 	cerr << "Error: Internal Logic Failure or File Stream Corruption" << endl;
 	exit(EXIT_FAILURE);
