@@ -13,6 +13,8 @@ using std::vector;
 
 int main(int argc, char** argv){
   cout << endl << "DANMAKUFU OBFUSCATOR BY SPAREN" << endl;
+  cout << "~~~This program is use-at-your-own-risk.~~~" << endl;
+  cout << "~~~Please make sure you have backed up your code before using this program.~~~" << endl;
   if(argc<2){
     cout << "Error: No File Specified." << endl;
     cout << "Usage: ./dnhobf filename.ext" << endl;
@@ -33,7 +35,7 @@ int main(int argc, char** argv){
 	cout << "1: Only remove comments - good for shrinking filesize" << endl;
 	cout << "2: Remove comments and whitespace" << endl;
 	cout << "q: quit" << endl;
-	cout << "*****Please note that Option 2, though it technically works, is not actually capable with Danmakufu due to Danmakufu interpreting functions differently if there is a new line after their usage. Don't ask why - it's the reason this project is dead." << endl;
+	cout << "Option 2 may be unstable. Please submit bug reports via Github Issues." << endl;
 	cin >> input;
 	if(input == "1"){
 	  ObfuscateA1(filename); satisfied = true;

@@ -5,7 +5,7 @@ This project aims to work with the existing Danmakufu syntax to obfuscate indivi
 
 There are currently two levels of Obfuscation: <br>
 1: Remove all comments - very good for purging documentation and various comments from your code <br>
-2: Remove all comments, new lines, tabs, and extra whitespace - Theoretically very good but needs a lot of fixing due to Danmakufu requiring certain things to be on seperate lines.<br>
+2: Remove all comments, new lines, tabs, and extra whitespace - node becomes difficult for humans to read. Can still revert back to human-readable form.<br>
 
 To compile:		<br>
     make
@@ -15,8 +15,9 @@ To run:			<br>
 
 # Aims
 ---Full removal of all comments [Status: DONE]						<br>
----Replacement of all instances of new lines with single spaces  [Status: PROGRESS]		<br>
----Full removal of all instances of tabs and extra whitespace [Status: PROGRESS]		<br>
+---Replacement of all instances of new lines with single spaces  [Status: DONE]		<br>
+---Full removal of all instances of tabs and extra whitespace [Status: DONE]		<br>
+---Newlines maintained in all cases where they are required [Status: PROGRESS]		<br>
 ---Replacement of all local variables with hexadecimal [Status: TODO]			<br>
 
 # Notes
