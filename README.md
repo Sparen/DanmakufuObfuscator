@@ -5,7 +5,7 @@ This project aims to work with the existing Danmakufu syntax to obfuscate indivi
 
 There are currently two levels of Obfuscation: <br>
 1: Remove all comments - very good for purging documentation and various comments from your code <br>
-2: Remove all comments, new lines, tabs, and extra whitespace - node becomes difficult for humans to read. Can still revert back to human-readable form.<br>
+2: Remove all comments, new lines, tabs, and extra whitespace - code becomes difficult for humans to read. Can still revert back to human-readable form.<br>
 
 To compile:		<br>
     make
